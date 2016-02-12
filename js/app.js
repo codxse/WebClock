@@ -1,16 +1,23 @@
 function onReady() {
     console.log('Bing Bang!!!');
 
-    setInterval(updateClock,1000);
-    updateClock();
+    var clock = createClock('clock');
 }
 
-function updateClock() {
-    var date = new Date();
-    var now = date.getHours()+':'+date.getMinutes()+':'+date.getSeconds();
-    var clock = document.getElementById('clock');
+function createClock(HTML_ID) {
+    var clock = {};
+    clock.updateClock = function() {
+        var date = new Date();
+        var now = date.getHours()+':'+date.getMinutes()+':'+date.getSeconds();
+        var c = document.getElementById(HTML_ID);
 
-    clock.innerHTML = formatDigits(now);
+        c.innerHTML = formatDigits(now);
+    };
+
+    setInterval(clock.updateClock,1000);
+    clock.updateClock();
+
+    return clock;
 }
 
 function formatDigits(val) {
